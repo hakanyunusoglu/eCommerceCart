@@ -1,41 +1,53 @@
-﻿@{
+﻿@model IEnumerable<eCommerce.Domain.Entities.Product>
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="tm-paging-links">
-    <nav>
-        <ul>
-            <li class="tm-paging-item"><a href="#" class="tm-paging-link active">Tümü</a></li>
-            <li class="tm-paging-item"><a href="#" class="tm-paging-link">Kategori</a></li>
 
-        </ul>
-    </nav>
-</div>
+ <link href="~/css/productList.css" rel="stylesheet" />
 <div class="row tm-gallery">
     <div id="tm-gallery-page-tümü" class="tm-gallery-page">
-        <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-            <div class="card" style="width: 15rem;">
-                <img src="~/productimg/01.jpg" class="card-img-top img-fluid tm-gallery-img" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <p class="tm-gallery-price">@*@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", item.Fiyat)*@9444₺</p>
-                    <a href="#" class="btn btn-primary">Incele</a> -  <a href="#" class="btn btn-info text-white">Sepete Ekle</a>
+        @foreach (var item in Model)
+        {
+            <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+
+                <div class="card" style="width: 15rem;">
+                    <img src="~/@item.Image" class="card-img-top img-fluid tm-gallery-img" style="width:200px; height:200px;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <h6 class="card-title">@item.category.Title</h6>
+                        <p class="card-text">@item.Description</p>
+                        @foreach (var sellerItem in item.SellerList)
+                        {
+                            <p> Stok: @sellerItem.Quantity</p>
+                            <p class="tm-gallery-price">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", sellerItem.Price)</p>
+                        }
+                        <a href="/Home/Detail/@item.ID" class="btn btn-primary">Incele</a> -  <a href="#" class="btn btn-info text-white">Sepete Ekle</a>
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
+        }
     </div>
-    <div id="tm-gallery-page-kategori" class="tm-gallery-page hidden">
-        <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-            <div class="card" style="width: 15rem;">
-                <img src="~/productimg/02.jpg" class="card-img-top img-fluid tm-gallery-img" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <p class="tm-gallery-price">@*@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", item.Fiyat)*@9444₺</p>
-                    <a href="#" class="btn btn-primary">Incele</a> -  <a href="#" class="btn btn-info text-white">Sepete Ekle</a>
-                </div>
-            </div>
-        </article>
+</div>
+
+<div class="single-item">
+    <div class="left-set">
+        <img src="http://images.nike.com/is/image/DotCom/PDP_HERO_S/NIKE-YA-LEBRON-MAX-AIR-BP-BA5124_660_A.jpg" alt="" />
+    </div>
+    <div class="right-set">
+        <div class="name">LEBRON MAX AIR</div>
+        <div class="subname">KIDS' BACKPACK</div>
+        <div class="price">$65</div>
+        <div class="description">
+            <p>
+                The LeBron Max Air Kids' Backpack has cushioned, adjustable straps, a top-loading design and spacious main compartment for comfortable carrying and easy access to your gear.
+            </p>
+        </div>
+        <div class="color">
+            <ul>
+                <li>Stok</li>
+            </ul>
+        </div>
+        <button class="button-style">ADD TO CART</button>
     </div>
 </div>

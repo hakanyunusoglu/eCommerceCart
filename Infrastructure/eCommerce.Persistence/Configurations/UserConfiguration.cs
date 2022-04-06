@@ -13,7 +13,7 @@ namespace eCommerce.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.HasOne(x => x.userInfo).WithOne(x => x.User).HasForeignKey<AppUserInfo>(x=>x.userID);
+            //builder.HasOne(x => x.userInfo).WithOne(x => x.User).HasForeignKey<AppUserInfo>(x=>x.userID);
         }
     }
 }

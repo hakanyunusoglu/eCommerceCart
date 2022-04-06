@@ -1,4 +1,6 @@
-﻿using eCommerce.UI.Models;
+﻿using eCommerce.Application.Repositories;
+using eCommerce.Domain.Entities;
+using eCommerce.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +8,35 @@ namespace eCommerce.UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductRepository<Product> repo;
+        public HomeController(IProductRepository<Product> _repo)
         {
-            _logger = logger;
+            repo = _repo;
         }
+        public async Task<IActionResult> Index()
+        {
+            if (HttpContext.Session.GetString("loggedUser") != null)
+            {
 
-        public IActionResult Index()
+                return View(await repo.GetAll());
+            }
+            else
+            {
+                return RedirectToAction("SignIn", "User");
+            }
+        }
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            var product = await repo.GetById(id);
+            if (product != null)
+            {
+                return View(product);
+            }
+            return RedirectToAction("Index","Home");
+        }
+        public async Task<IActionResult> CartAdd(Guid id)
         {
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿@{
+﻿@model eCommerce.UI.Models.DTO.LoginVM
+@{
     Layout = null;
 }
 
 <!DOCTYPE html>
 
 <html>
-<head>
+<head> 
     <meta name="viewport" content="width=device-width" />
     <title>SignIn</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -17,11 +18,24 @@
             <div class="fadeIn first">
                 <img src="~/img/login-icon.svg" id="icon" alt="User Icon" style="width:8rem; height:8rem;" />
             </div>
-            <form>
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Kullanıcı Adı / Email">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="Şifre">
+            @if(ViewBag.ErrorMessage != null)
+            {
+                <div class="text-danger">@ViewBag.ErrorMessage</div>
+            
+            <form asp-controller="User" asp-action="SignIn" method="post">
+                <input type="text" id="Username" class="fadeIn second" name="Username" value="@Model.Username" placeholder="Kullanıcı Adı / Email">
+                <input type="text" id="Password" class="fadeIn third" name="Password"  value ="@Model.Password" placeholder="Şifre">
                 <input type="submit" class="fadeIn fourth" value="Giriş Yap">
-            </form>
+                </form>
+            }
+            else
+            {
+                <form asp-controller="User" asp-action="SignIn" method="post">
+                <input type="text" id="Username" class="fadeIn second" name="Username" placeholder="Kullanıcı Adı / Email">
+                <input type="text" id="Password" class="fadeIn third" name="Password" placeholder="Şifre">
+                <input type="submit" class="fadeIn fourth" value="Giriş Yap">
+                </form>
+            }
         </div>
     </div>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

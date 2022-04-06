@@ -1,5 +1,6 @@
 ﻿using eCommerce.Persistence;
 using eCommerce.Persistence.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace eCommerce.UI
 {
@@ -16,6 +17,16 @@ namespace eCommerce.UI
         {
             services.AddControllersWithViews();
             services.AddPersistenceServices();
+            services.AddDistributedMemoryCache();
+            services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromMinutes(1);
+                option.Cookie.Name = "eCommerceLogged";
+                option.Cookie.HttpOnly = true;
+                option.Cookie.IsEssential = true;
+            });
+            services.AddMvc();
+          
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, eCommerceDbContext dbcontext)
@@ -23,7 +34,6 @@ namespace eCommerce.UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.AddSeedDatabase(dbcontext);
             }
             else
             {
@@ -32,10 +42,9 @@ namespace eCommerce.UI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

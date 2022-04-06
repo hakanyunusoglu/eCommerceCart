@@ -31,16 +31,13 @@ namespace eCommerce.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
@@ -48,65 +45,16 @@ namespace eCommerce.Persistence.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Users");
-                });
 
-            modelBuilder.Entity("eCommerce.Domain.Entities.AppUserAddress", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("UsersAddresses");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.AppUserInfo", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("userAddressID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("userID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("userAddressID");
-
-                    b.HasIndex("userID")
-                        .IsUnique();
-
-                    b.ToTable("UsersInfo");
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("a48da1e6-eece-4ab2-b7ff-ce0a20b24736"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1677),
+                            PasswordHash = new byte[] { 226, 255, 134, 2, 203, 22, 252, 251, 29, 91, 101, 211, 211, 3, 157, 168, 78, 94, 242, 219, 103, 9, 35, 221, 229, 128, 236, 200, 83, 42, 175, 36, 181, 118, 208, 68, 254, 101, 143, 189, 124, 201, 170, 21, 239, 241, 214, 151, 16, 174, 195, 97, 33, 158, 74, 250, 97, 157, 47, 148, 224, 57, 27, 101 },
+                            PasswordSalt = new byte[] { 202, 146, 90, 140, 93, 159, 113, 188, 65, 31, 119, 85, 236, 183, 112, 198, 4, 197, 22, 86, 96, 123, 72, 60, 11, 154, 49, 94, 208, 223, 35, 242, 215, 232, 208, 63, 72, 249, 83, 44, 124, 20, 27, 124, 74, 84, 170, 26, 130, 254, 199, 105, 51, 168, 63, 112, 108, 189, 48, 134, 56, 58, 107, 192, 141, 14, 111, 187, 128, 243, 246, 118, 13, 102, 157, 49, 126, 15, 50, 228, 220, 110, 254, 131, 96, 182, 230, 54, 46, 217, 180, 167, 179, 9, 118, 81, 54, 68, 205, 229, 189, 39, 192, 251, 178, 36, 15, 8, 64, 24, 47, 201, 41, 110, 120, 155, 1, 16, 249, 210, 124, 140, 55, 219, 3, 73, 149, 186 },
+                            Username = "hakan"
+                        });
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.Cart", b =>
@@ -172,6 +120,29 @@ namespace eCommerce.Persistence.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("76e6dfdb-1fef-4a0a-8e5d-ec0a09bff1aa"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1864),
+                            Description = "Electronic Equipment",
+                            Title = "Computer"
+                        },
+                        new
+                        {
+                            ID = new Guid("893ec5d0-02ee-4088-a2cd-088d4edfaa08"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1870),
+                            Description = "Electronic Small Equipment",
+                            Title = "Tablet"
+                        },
+                        new
+                        {
+                            ID = new Guid("53b016e1-5148-403c-a432-0a3dba1f6337"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1872),
+                            Description = "Electronic Smart Equipment",
+                            Title = "Phone"
+                        });
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.Product", b =>
@@ -203,6 +174,38 @@ namespace eCommerce.Persistence.Migrations
                     b.HasIndex("categoryID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("b90751e3-2b9a-430d-a7b2-d1696f1be3b2"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1900),
+                            Description = "Xiaomi Smart Phone",
+                            Image = "productimg/03.jpg",
+                            Name = "Mobile Phone",
+                            Title = "Smart Phone",
+                            categoryID = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            ID = new Guid("a70939ae-5fb2-4e66-8887-7a56046b1bd2"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1906),
+                            Description = "Apple new generation",
+                            Image = "productimg/02.jpg",
+                            Name = "Apple Tablet",
+                            Title = "Tablet",
+                            categoryID = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            ID = new Guid("a8ffa6b5-fb0e-47db-8b11-ad6905f9eff2"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1908),
+                            Description = "i7 notebook",
+                            Image = "productimg/01.jpg",
+                            Name = "Asus Notebook",
+                            Title = "Notebook",
+                            categoryID = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.SellerList", b =>
@@ -228,25 +231,32 @@ namespace eCommerce.Persistence.Migrations
                     b.HasIndex("productID");
 
                     b.ToTable("SellerLists");
-                });
 
-            modelBuilder.Entity("eCommerce.Domain.Entities.AppUserInfo", b =>
-                {
-                    b.HasOne("eCommerce.Domain.Entities.AppUserAddress", "userAddress")
-                        .WithMany("userInfoList")
-                        .HasForeignKey("userAddressID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eCommerce.Domain.Entities.AppUser", "User")
-                        .WithOne("userInfo")
-                        .HasForeignKey("eCommerce.Domain.Entities.AppUserInfo", "userID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("userAddress");
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("fa54b844-62b2-4d76-b7d1-e40caa542e6d"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1936),
+                            Price = 4999m,
+                            Quantity = 10,
+                            productID = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            ID = new Guid("cc3ba645-8500-47bb-a95f-58313207e3b8"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1945),
+                            Price = 3856m,
+                            Quantity = 5,
+                            productID = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            ID = new Guid("6c005aa1-d6d4-4d86-99d8-07e8dab90240"),
+                            CreatedDate = new DateTime(2022, 4, 6, 20, 56, 39, 120, DateTimeKind.Local).AddTicks(1947),
+                            Price = 8999m,
+                            Quantity = 16,
+                            productID = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.CartItem", b =>
@@ -288,17 +298,6 @@ namespace eCommerce.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("product");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.AppUser", b =>
-                {
-                    b.Navigation("userInfo")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.AppUserAddress", b =>
-                {
-                    b.Navigation("userInfoList");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.Cart", b =>
