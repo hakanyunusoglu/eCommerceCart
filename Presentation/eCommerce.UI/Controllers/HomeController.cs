@@ -1,15 +1,12 @@
-﻿using eCommerce.Application.Repositories;
-using eCommerce.Domain.Entities;
-using eCommerce.UI.Models;
+﻿using eCommerce.Persistence.Abstract;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace eCommerce.UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IProductRepository<Product> repo;
-        public HomeController(IProductRepository<Product> _repo)
+        private readonly IProductServices repo;
+        public HomeController(IProductServices _repo)
         {
             repo = _repo;
         }

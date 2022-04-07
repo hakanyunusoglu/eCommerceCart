@@ -11,6 +11,7 @@
     <title>SignIn</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="~/css/login.css" rel="stylesheet" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
 </head>
 <body>
     <div class="wrapper fadeInDown">
@@ -24,7 +25,8 @@
             
             <form asp-controller="User" asp-action="SignIn" method="post">
                 <input type="text" id="Username" class="fadeIn second" name="Username" value="@Model.Username" placeholder="Kullanıcı Adı / Email">
-                <input type="text" id="Password" class="fadeIn third" name="Password"  value ="@Model.Password" placeholder="Şifre">
+                <input type="password" id="Password" class="fadeIn third" name="Password"  value ="@Model.Password" placeholder="Şifre">
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
                 <input type="submit" class="fadeIn fourth" value="Giriş Yap">
                 </form>
             }
@@ -32,12 +34,26 @@
             {
                 <form asp-controller="User" asp-action="SignIn" method="post">
                 <input type="text" id="Username" class="fadeIn second" name="Username" placeholder="Kullanıcı Adı / Email">
-                <input type="text" id="Password" class="fadeIn third" name="Password" placeholder="Şifre">
+                <input type="password" id="Password" class="fadeIn third" name="Password" placeholder="Şifre">
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
                 <input type="submit" class="fadeIn fourth" value="Giriş Yap">
                 </form>
             }
         </div>
     </div>
+      <script>
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#Password");
+
+        togglePassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            
+            // toggle the icon
+            this.classList.toggle("bi-eye");
+        });
+    </script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>

@@ -1,5 +1,4 @@
-﻿using eCommerce.Application.Repositories;
-using eCommerce.Domain.Entities;
+﻿using eCommerce.Infrastructure.Abstract;
 using eCommerce.UI.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,8 +6,8 @@ namespace eCommerce.UI.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IAppUserRepository<AppUser> repo;
-        public UserController(IAppUserRepository<AppUser> _repo)
+        private readonly IUserServices repo;
+        public UserController(IUserServices _repo)
         {
             repo = _repo;
         }

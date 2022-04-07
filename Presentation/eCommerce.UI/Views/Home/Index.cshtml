@@ -5,49 +5,33 @@
 }
 
  <link href="~/css/productList.css" rel="stylesheet" />
-<div class="row tm-gallery">
-    <div id="tm-gallery-page-tümü" class="tm-gallery-page">
-        @foreach (var item in Model)
-        {
-            <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-
-                <div class="card" style="width: 15rem;">
-                    <img src="~/@item.Image" class="card-img-top img-fluid tm-gallery-img" style="width:200px; height:200px;" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Title</h5>
-                        <h6 class="card-title">@item.category.Title</h6>
-                        <p class="card-text">@item.Description</p>
-                        @foreach (var sellerItem in item.SellerList)
-                        {
-                            <p> Stok: @sellerItem.Quantity</p>
-                            <p class="tm-gallery-price">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", sellerItem.Price)</p>
-                        }
-                        <a href="/Home/Detail/@item.ID" class="btn btn-primary">Incele</a> -  <a href="#" class="btn btn-info text-white">Sepete Ekle</a>
-                    </div>
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            @foreach(var item in Model){
+            <div class="row p-2 bg-white border rounded">
+                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="~/@item.Image" style="width:150px;height:100px;"></div>
+                <div class="col-md-6 mt-1">
+                    <h5>@item.Title</h5>
+                    <div class="d-flex flex-row">
+                        <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                    </div> @foreach(var sellerItem in item.SellerList){
+                    <div class="mt-1 mb-1 spec-1"><span class="dot"></span><span>Stock: @sellerItem.Quantity </span></div>
+                    }
+                    <p class="text-justify text-truncate para mb-0">@item.Description<br><br></p>
                 </div>
-            </article>
-        }
-    </div>
-</div>
-
-<div class="single-item">
-    <div class="left-set">
-        <img src="http://images.nike.com/is/image/DotCom/PDP_HERO_S/NIKE-YA-LEBRON-MAX-AIR-BP-BA5124_660_A.jpg" alt="" />
-    </div>
-    <div class="right-set">
-        <div class="name">LEBRON MAX AIR</div>
-        <div class="subname">KIDS' BACKPACK</div>
-        <div class="price">$65</div>
-        <div class="description">
-            <p>
-                The LeBron Max Air Kids' Backpack has cushioned, adjustable straps, a top-loading design and spacious main compartment for comfortable carrying and easy access to your gear.
-            </p>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    @foreach(var sellerItem in item.SellerList){
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", sellerItem.Price)</h4><span class="strike-text">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", (sellerItem.Price + 150))</span>
+                    </div>
+                    }
+                    <h6 class="text-success">Free shipping</h6>
+                    <div class="d-flex flex-column mt-4"><a class="btn btn-primary btn-sm" href="/Home/Detail/@item.ID">Details</a><button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to Cart</button></div>
+                </div>
+            </div>
+            <br />
+            }
         </div>
-        <div class="color">
-            <ul>
-                <li>Stok</li>
-            </ul>
-        </div>
-        <button class="button-style">ADD TO CART</button>
     </div>
 </div>
