@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Persistence.Concrete
 {
-    public class ProductServices : IProductServices
+    public class OrderServices : IOrderServices
     {
-        private IProductRepository<Product> repo;
-        public ProductServices(IProductRepository<Product> _repo)
+        private IOrderRepository<Order> repo;
+        public OrderServices(IOrderRepository<Order> _repo)
         {
             repo = _repo;
         }
-        public async Task<List<Product>> GetAll()
+
+        public  void addOrder(Order model)
         {
-           return await repo.GetAll();
+           repo.addOrder(model);
         }
 
-        public async Task<Product> GetById(Guid id)
+        public async Task<List<Order>> GetOrders(Guid userID)
         {
-          return await repo.GetById(id);
+            return await repo.GetOrders(userID);
         }
     }
 }

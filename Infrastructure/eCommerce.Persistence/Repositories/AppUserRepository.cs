@@ -29,7 +29,7 @@ namespace eCommerce.Persistence.Repositories
 
         public async Task<AppUser> GetByUsername(string data)
         {
-            return await this.eCommerceDbContext.Set<AppUser>().FirstOrDefaultAsync(x => x.Username == data);
+            return await this.eCommerceDbContext.Set<AppUser>().Include(x=>x.userInfo).ThenInclude(x=>x.UserAddress).FirstOrDefaultAsync(x => x.Username == data);
         }
         public async Task<bool> VerifyPassowrd(string password,string username, byte[] passwordHash, byte[] passwordSalt)
         {

@@ -18,25 +18,30 @@ namespace eCommerce.Persistence.Context
         }
 
         public DbSet<AppUser> Users { get; set; }
-        //public DbSet<AppUserAddress> UsersAddresses { get; set; }
-        //public DbSet<AppUserInfo> UsersInfo { get; set; }
+        public DbSet<AppUserAddress> UsersAddresses { get; set; }
+        public DbSet<AppUserInfo> UsersInfo { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<SellerList> SellerLists { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new UserConfiguration());
-            //modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CartItemConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserInfoConfiguration());
             base.OnModelCreating(modelBuilder);
             this.SeedUser(modelBuilder);
             this.SeedCategory(modelBuilder);
             this.SeedProduct(modelBuilder);
             this.SeedSellerList(modelBuilder);
+            this.SeedCart(modelBuilder);
+            this.SeedUserInfo(modelBuilder);
+            this.SeedUserAddress(modelBuilder);
         }
         private void SeedUser(ModelBuilder builder)
         {
@@ -47,7 +52,7 @@ namespace eCommerce.Persistence.Context
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             AppUser user = new AppUser()
             {
-                ID = Guid.NewGuid(),
+                ID = new Guid("97ab0c42-b728-11ec-b909-0242ac120002"),
                 CreatedDate = DateTime.Now,
                 Username = "hakan",
                 PasswordHash = passwordHash,
@@ -112,7 +117,6 @@ namespace eCommerce.Persistence.Context
             }};
             builder.Entity<Product>().HasData(productList);
         }
-
         private void SeedSellerList(ModelBuilder builder)
         {
             List<SellerList> sellerList = new List<SellerList>() { new SellerList()
@@ -138,6 +142,42 @@ namespace eCommerce.Persistence.Context
              productID = new Guid("5d80aa30-b639-11ec-b909-0242ac120002")
             } };
             builder.Entity<SellerList>().HasData(sellerList);
+        }
+        private void SeedCart(ModelBuilder builder)
+        {
+            Cart cart = new Cart()
+            {
+                ID = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                userID = new Guid("97ab0c42-b728-11ec-b909-0242ac120002")
+            };
+            builder.Entity<Cart>().HasData(cart);
+        }
+        private void SeedUserInfo(ModelBuilder builder)
+        {
+            AppUserInfo userInfo = new AppUserInfo()
+            {
+                ID = new Guid("bc32c678-b75e-11ec-b909-0242ac120002"),
+                userID = new Guid("97ab0c42-b728-11ec-b909-0242ac120002"),
+                CreatedDate = DateTime.Now,
+                Name = "Hakan",
+                Surname = "Yunusoğlu",
+                userAddressID = new Guid("df9b82d0-b75e-11ec-b909-0242ac120002"),
+                Phone ="0535 555 55 55",
+                Email = "hakanyunusoglu93@gmail.com"
+            };
+            builder.Entity<AppUserInfo>().HasData(userInfo);
+        }
+        private void SeedUserAddress(ModelBuilder builder)
+        {
+            AppUserAddress userAddress = new AppUserAddress()
+            {
+                ID = new Guid("df9b82d0-b75e-11ec-b909-0242ac120002"),
+                City = "Istanbul",
+                CreatedDate = DateTime.Now,
+                Address = "Hadımköy Arnavutköy"
+            };
+            builder.Entity<AppUserAddress>().HasData(userAddress);
         }
 
     }

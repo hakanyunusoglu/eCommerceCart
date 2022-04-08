@@ -22,19 +22,19 @@ namespace eCommerce.Persistence.Concrete
            repo.CreatePasswordHash(password, out passwordHash, out passwordsalt);
         }
 
-        public Task<List<AppUser>> GetAll()
+        public async Task<List<AppUser>> GetAll()
         {
-           return repo.GetAll();
+           return await repo.GetAll();
         }
 
-        public Task<AppUser> GetByUsername(string data)
+        public async Task<AppUser> GetByUsername(string data)
         {
-          return repo.GetByUsername(data);
+          return await repo.GetByUsername(data);
         }
 
-        public Task<bool> VerifyPassowrd(string password, string username, byte[] passwordHash, byte[] passwordSalt)
+        public async Task<bool> VerifyPassowrd(string password, string username, byte[] passwordHash, byte[] passwordSalt)
         {
-          return repo.VerifyPassowrd(password, username, passwordHash, passwordSalt);
+          return await repo.VerifyPassowrd(password, username, passwordHash, passwordSalt);
         }
     }
 }

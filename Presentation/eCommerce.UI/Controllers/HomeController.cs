@@ -12,28 +12,28 @@ namespace eCommerce.UI.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            if (HttpContext.Session.GetString("loggedUser") != null)
-            {
+            ViewBag.Username = null;
 
-                return View(await repo.GetAll());
+            if(HttpContext.Session.GetString("loggedUser")!= null)
+            { 
+                ViewBag.Username = HttpContext.Session.GetString("loggedUser").ToString();
             }
-            else
-            {
-                return RedirectToAction("SignIn", "User");
-            }
+            return View(await repo.GetAll());
         }
         public async Task<IActionResult> Detail(Guid id)
         {
             var product = await repo.GetById(id);
             if (product != null)
             {
+                ViewBag.Username = null;
+
+                if (HttpContext.Session.GetString("loggedUser") != null)
+                {
+                    ViewBag.Username = HttpContext.Session.GetString("loggedUser").ToString();
+                }
                 return View(product);
             }
             return RedirectToAction("Index","Home");
-        }
-        public async Task<IActionResult> CartAdd(Guid id)
-        {
-            return View();
         }
     }
 }

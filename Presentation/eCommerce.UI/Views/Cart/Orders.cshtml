@@ -1,0 +1,56 @@
+﻿@model List<eCommerce.UI.Models.DTO.OrderListVM>
+
+<h3 class="text-center">Siparişlerim</h3>
+<hr />
+@foreach (var item in Model)
+{
+<table class="table table-bordered table-sm mb-3">
+    <thead class="bg-dark text-light">
+        <tr>
+            <td colspan="2">Sipariş No: #@item.OrderNumber</td>
+            <th>Fiyat</th>
+            <th>Adet</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var orderItem in item.OrderItems)
+            {
+                <tr>
+                    <td>
+                        <img src="~/@orderItem.ImageUrl" alt="" width="50" class="text-center"/>
+                    </td>
+                    <td>@orderItem.Name</td>
+                    <td>@orderItem.Price</td>
+                    <td>@orderItem.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">Müşteri Adı</td>
+            <td>@item.firstName @item.lastName</td>
+            <td rowspan="6">Toplam: @String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}",item.TotalPrice())</td>
+        </tr>
+        <tr>
+            <td colspan="2">Adres:</td>
+            <td>@item.Address</td>
+        </tr>
+         <tr>
+            <td colspan="2">Email:</td>
+            <td>@item.Email</td>
+        </tr>
+         <tr>
+            <td colspan="2">Tel:</td>
+            <td>@item.Phone</td>
+        </tr>
+         <tr>
+            <td colspan="2">Şehir:</td>
+            <td>@item.City</td>
+        </tr>
+         <tr>
+            <td colspan="2">Ödeme Türü:</td>
+            <td>Kredi Kartı</td>
+        </tr>
+    </tfoot>
+</table>
+}

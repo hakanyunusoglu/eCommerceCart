@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Persistence.Configurations
 {
-    public class UserInfoConfiguration : IEntityTypeConfiguration<AppUserInfo>
+    public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
-        public void Configure(EntityTypeBuilder<AppUserInfo> builder)
+        public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.HasOne(x => x.UserAddress).WithMany(x => x.userInfo).HasForeignKey(x=>x.userAddressID);
+            builder.HasMany(x => x.OrderItems).WithOne(x => x.Order).HasForeignKey(x => x.orderID);
         }
     }
 }

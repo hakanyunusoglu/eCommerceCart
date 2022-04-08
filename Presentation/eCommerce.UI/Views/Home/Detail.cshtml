@@ -4,42 +4,6 @@
     ViewData["Title"] = "Product Detail";
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@*<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-    <dt class="col-sm-2">
-    @Html.DisplayNameFor(model => model.Image)
-    </dt>
-    <dd class="col-sm-10">
-    <img src="~/@Model.Image" style="width:250px; height:250px;" />
-    </dd>
-    <dt class="col-sm-2">
-    @Html.DisplayNameFor(model => model.Title)
-    </dt>
-    <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Title)
-    </dd>
-    <dt class="col-sm-2">
-    @Html.DisplayNameFor(model => model.category.Title)
-    </dt>
-    <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.category.Title)
-    </dd>
-    <dt class="col-sm-2">
-    @Html.DisplayNameFor(model => model.Description)
-    </dt>
-    <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Description)
-    </dd>
-    </dl>
-    </div>
-    <div>
-    @Html.ActionLink("Sepete Ekle", "CartAdd",null, new { id = Model.ID }, new {@class ="btn btn-info"}) |
-    <a asp-action="Index" class="btn btn-primary">Anasayfaya Dön</a>
-    </div>*@
-
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/css/productDetail.css" rel="stylesheet" />
 
@@ -51,35 +15,57 @@
                     <div class="col-md-6">
                         <div class="images p-3">
                             <div class="text-center p-4"> <img id="main-image" src="~/@Model.Image" width="250" /> </div>
-                            <div class="thumbnail text-center"> <img onclick="change_image(this)" src="~/@Model.Image" width="70"> <img onclick="change_image(this)" src="~/@Model.Image" width="70"> </div>
+                            <div class="thumbnail text-center">
+                                <img onclick="change_image(this)" src="~/@Model.Image" width="70">
+                                <img onclick="change_image(this)" src="~/@Model.Image" width="70">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="product p-4">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center"><a href="/Home/Index"><span class="ml-1"></span> <i class="fa fa-long-arrow-left"> Geri Dön</i> </a></div> <i class="fa fa-shopping-cart text-muted"></i>
+                                <div class="d-flex align-items-center"><a href="/Home/Index"><span class="ml-1"></span> <i class="fa fa-long-arrow-left"> Geri Dön</i> </a></div>
+                                <a href="~/Cart/Index" class="text-decoration-none text-dark"><i class="fa fa-shopping-cart text-muted"></i></a>
                             </div>
 
                             <div class="mt-4 mb-3">
                                 <span class="text-uppercase text-muted brand">@Model.category.Title</span>
-                                <h5 class="text-uppercase">@Model.Title</h5>
+                                <h5 class="text-uppercase">@Model.Description</h5>
                                 @foreach (var item in Model.SellerList)
                                 {
                                     <div class="price d-flex flex-row align-items-center">
                                         <span class="act-price">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", @item.Price)</span>
-                                        <div class="ml-2"> <small class="dis-price">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", (@item.Price + 400))<span class="strike-text" /></small></div>
+                                        <div class="ml-2">
+                                            <small class="dis-price">
+                                                @String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", (@item.Price + 400))
+                                                <span class="strike-text" />
+                                            </small>
+                                        </div>
                                     </div>
                                 }
                             </div>
 
-                            <p class="about">@Model.Description</p>
+                            <p class="about">@Model.Title</p>
                             <div class="sizes mt-5">
                                 @foreach (var item in Model.SellerList)
                                 {
-                                    <h6 class="text-uppercase">Stok</h6> <label class="radio"> <input type="radio" name="size" value="@item.Quantity" checked> <span>@item.Quantity</span> </label>
+                                    <h6 class="text-uppercase">Stok</h6> <label class="radio">
+                                        <input type="radio" name="size" value="@item.Quantity" checked>
+                                        <span>@item.Quantity</span>
+                                    </label>
                                 }
-                            </div>
-                            <div class="cart mt-4 align-items-center"> <button class="btn btn-info text-uppercase mr-2 px-4">Sepete Ekle</button> </div>
+                            </div>@if (ViewBag.Username != null)
+                            {
+                                <div class="cart mt-4 align-items-center">
+                                     <form asp-controller="Cart" asp-action="AddtoCart" method="post">
+                                    <input type="hidden" name="productID" value="@Model.ID" style="width:0px;height:0px;" id="productID" />
+                                         <input type="number" name="quantity" value="1" class="w-25 text-center" id="quantity">
+                                         <button class="btn btn-info text-uppercase mr-2 px-4">Sepete Ekle</button>
+                                   
+                                    
+                                    </form>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

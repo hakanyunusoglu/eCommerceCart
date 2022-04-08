@@ -3,34 +3,47 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
- <link href="~/css/productList.css" rel="stylesheet" />
+<link href="~/css/productList.css" rel="stylesheet" />
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
         <div class="col-md-10">
-            @foreach(var item in Model){
-            <div class="row p-2 bg-white border rounded">
-                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="~/@item.Image" style="width:150px;height:100px;"></div>
-                <div class="col-md-6 mt-1">
-                    <h5>@item.Title</h5>
-                    <div class="d-flex flex-row">
-                        <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                    </div> @foreach(var sellerItem in item.SellerList){
-                    <div class="mt-1 mb-1 spec-1"><span class="dot"></span><span>Stock: @sellerItem.Quantity </span></div>
-                    }
-                    <p class="text-justify text-truncate para mb-0">@item.Description<br><br></p>
-                </div>
-                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                    @foreach(var sellerItem in item.SellerList){
-                    <div class="d-flex flex-row align-items-center">
-                        <h4 class="mr-1">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", sellerItem.Price)</h4><span class="strike-text">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", (sellerItem.Price + 150))</span>
+            @foreach (var item in Model)
+            {
+                <div class="row p-2 bg-white border rounded">
+                    <div class="col-md-3 mt-1"><a href="/Home/Detail/@item.ID" class="text-decoration-none text-dark"><img class="img-fluid img-responsive rounded product-image" src="~/@item.Image" style="width:150px;height:100px;"></a></div>
+                    <div class="col-md-6 mt-1">
+                        <h5>@item.Title</h5>
+                        <div class="d-flex flex-row">
+                            <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                        </div> @foreach (var sellerItem in item.SellerList)
+                        {
+                            <div class="mt-1 mb-1 spec-1"><span class="dot"></span><span>Stok: @sellerItem.Quantity </span></div>
+                        }
+                        <p class="text-justify text-truncate para mb-0">@item.Description<br><br></p>
                     </div>
-                    }
-                    <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4"><a class="btn btn-primary btn-sm" href="/Home/Detail/@item.ID">Detay</a><button class="btn btn-outline-primary btn-sm mt-2" type="button">Sepete Ekle</button></div>
+                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                        @foreach (var sellerItem in item.SellerList)
+                        {
+                            <div class="d-flex flex-row align-items-center">
+                                <h4 class="mr-1">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", sellerItem.Price)</h4><span class="strike-text">@String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}", (sellerItem.Price + 150))</span>
+                            </div>
+                        }
+                        <h6 class="text-success">Ücretsiz Kargo</h6>
+                        <div class="d-flex flex-column mt-4">
+                            <a class="btn btn-primary btn-sm" href="/Home/Detail/@item.ID">Detay</a>
+                            @if (ViewBag.Username != null)
+                            {
+                                <form asp-controller="Cart" asp-action="AddtoCart" method="post">
+                                    <input type="hidden" name="productID" value="@item.ID" style="width:0px;height:0px;" id="productID" />
+                                    <input type="hidden" name="quantity" value="1" style="width:0px;height:0px;" id="quantity">
+                                    <button class="btn btn-outline-primary btn-sm mt-2" type="submit">Sepete Ekle</button>
+                                </form>
+                            }
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <br />
+                <br />
             }
         </div>
     </div>

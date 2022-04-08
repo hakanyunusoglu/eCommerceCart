@@ -1,0 +1,69 @@
+﻿@model eCommerce.UI.Models.DTO.OrderVM
+<h2 class="text-center">Alışverişi Tamamla</h2>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <h4 class="mb-3">Sipariş Detayı</h4>
+        <form method="post" asp-action="CheckOut" asp-controller="Cart">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="@Model.firstName">Ad</label>
+                    <input asp-for="@Model.firstName" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="@Model.lastName">Soyad</label>
+                    <input asp-for="@Model.lastName" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Address">Adres</label>
+                <textarea asp-for="@Model.Address" class="form-control"></textarea>
+            </div>
+            <div class="row mb-3">
+                 <div class="col-md-4">
+                    <label asp-for="@Model.City">Şehir</label>
+                    <input asp-for="@Model.City" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="@Model.Phone">Telefon</label>
+                    <input asp-for="@Model.Phone" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="@Model.Email">Email</label>
+                    <input asp-for="@Model.Email" class="form-control" />
+                </div>                
+            </div>
+            <hr class="mb-3" />
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Onayla</button>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4 class="mb-3"></h4> 
+            <span>Özet Bilgiler</span>
+            <ul class="list-group mb-3">
+                @foreach(var item in Model.CartModel.CartItemList)
+                {
+                <li class="list-group-item d-flex justify-content-between">
+                    <div>
+                       <a href="~/Home/Detail/@item.productID"><img src="~/@item.ImageUrl" style="width:40px;height:40px;"/></a>
+                    </div>
+                    <div>
+                        <h6>@item.Name</h6>
+                        <small class="text-muted">@item.CategoryName</small>
+                    </div>
+                    <span class="text-muted">
+                       @String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}",item.Price)
+                    </span>
+                </li>
+                }
+                 <li class="list-group-item d-flex justify-content-between">
+                    <div>
+                        <h6>Toplam (₺)</h6>
+                    </div>
+                    <strong class="text-muted">
+                         @String.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:c2}",Model.CartModel.TotalPrice())
+                    </strong>
+                </li>
+            </ul>
+    </div>
+</div>

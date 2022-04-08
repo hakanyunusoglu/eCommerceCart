@@ -22,8 +22,12 @@ namespace eCommerce.Persistence
             services.AddDbContext<eCommerceDbContext>(options => options.UseSqlServer("Server=.\\SQLEXPRESS;Database=eCommerceDB; Trusted_Connection=true;"));
             services.AddScoped(typeof(IAppUserRepository<>), typeof(AppUserRepository<>));
             services.AddScoped(typeof(IProductRepository<>), typeof(ProductRepository<>));
+            services.AddScoped(typeof(ICartRepository<>), typeof(CartRepository<>));
+            services.AddScoped(typeof(IOrderRepository<>), typeof(OrderRepository<>));
             services.AddScoped(typeof(IProductServices), typeof(ProductServices));
             services.AddScoped(typeof(IUserServices), typeof(UserServices));
+            services.AddScoped(typeof(ICartServices), typeof(CartServices));
+            services.AddScoped(typeof(IOrderServices), typeof(OrderServices));
         }
     }
 }

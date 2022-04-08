@@ -34,7 +34,6 @@ namespace eCommerce.UI.Controllers
                     if (await repo.VerifyPassowrd(model.Password, model.Username, model.passwordHash, model.passwordSalt))
                     {
                         HttpContext.Session.SetString("loggedUser", model.Username);
-
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -45,6 +44,8 @@ namespace eCommerce.UI.Controllers
         }
         public async Task<IActionResult> SignOut()
         {
+            HttpContext.Session.Clear();
+
             return RedirectToAction("Index", "Home");
         }
     }
