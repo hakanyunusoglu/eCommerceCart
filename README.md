@@ -11,3 +11,7 @@ Follow this path for database setup and automatic data fetching.
 4) Write update-database to console (You must be using sql express)
 5) If you want to use a different database, you can edit the database connection path in 
 ServiceRegistration.cs located in the eCommerce.Persistence layer under the Infrastructure folder.
+
+Default login values:
+Username: hakan
+Password: 123456
